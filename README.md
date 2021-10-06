@@ -18,4 +18,4 @@ Key point about appliction:
 
 - Why is this project of interest to you?
 
-  Blackjack is one classic card game with simple rule. I think this fit the project properly.
+  This application could help people that interested in blackjack become familiar with and can play better.
