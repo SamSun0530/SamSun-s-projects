@@ -2,7 +2,7 @@
 
 ## Simplified Blackjack Game Application
 
-Key point about appliction:
+Key points about appliction:
 - What will the application do? 
 
   Once the game starts, the application will *randomly* generate 2 values each between *1* to *10* for player, and 2 other
@@ -13,7 +13,7 @@ Key point about appliction:
 
 - Who will use it?
 
-  Any player access to this blackjack game application
+  Any player who wants to play blackjack game
 
 
 - Why is this project of interest to you?
