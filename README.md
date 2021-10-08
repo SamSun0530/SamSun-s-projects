@@ -19,3 +19,17 @@ Key points about appliction:
 - Why is this project of interest to you?
 
   This application could help people that interested in blackjack become familiar with and can play better.
+
+
+## User Stories
+
+- As a user, I want to be able to get two target values, two initial value and add new value
+
+
+- As a user, I want to be able to stop adding value and start a new game
+
+
+- As a user, I want to be able to know whether I win this game and look my total score
+
+
+- As a user, I want to able to reset my total score
