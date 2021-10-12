@@ -21,10 +21,13 @@ Key points about appliction:
 
 ## User Stories
 
-- As a user, I want to be able to select one operation
-
-
-- As a user, I want to be able to type my inputs for calculation
+- As a user, I want to be able to select one operation and type 2 integer inputs for calculation
 
 
 - As a user, I want to be able to see the result printed
+
+
+- As a user, I want to be able to decide when to stop the calculation
+
+
+- As a user, I want to be able to see all previous results
