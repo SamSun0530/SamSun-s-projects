@@ -2,6 +2,7 @@ package model;
 
 import static java.lang.Math.pow;
 
+// 5 math operation include plus, minus, multiply, divide and power
 public class Calculator {
 
     public Calculator() {
@@ -19,7 +20,7 @@ public class Calculator {
     }
 
     //EFFECTS: multiply 2 values together
-    public int product(int operand1, int operand2) {
+    public int multiply(int operand1, int operand2) {
         return operand1 * operand2;
     }
 

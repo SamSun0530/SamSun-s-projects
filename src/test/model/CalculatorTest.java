@@ -60,22 +60,22 @@ class CalculatorTest {
 
     @Test
     public void productZeroZeroTest() {
-        assertEquals(0, cal.product(0, 0));
+        assertEquals(0, cal.multiply(0, 0));
     }
 
     @Test
     public void productPositivePositiveTest() {
-        assertEquals(63, cal.product(7, 9));
+        assertEquals(63, cal.multiply(7, 9));
     }
 
     @Test
     public void productPositiveNegativeTest() {
-        assertEquals(-32, cal.product(4, -8));
+        assertEquals(-32, cal.multiply(4, -8));
     }
 
     @Test
     public void productNegativeNegativeTest() {
-        assertEquals(15, cal.product(-3, -5));
+        assertEquals(15, cal.multiply(-3, -5));
     }
 
     @Test
