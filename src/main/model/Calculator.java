@@ -1,7 +1,5 @@
 package model;
 
-import static java.lang.Math.pow;
-
 // 5 math operation include plus, minus, multiply, divide and power
 public class Calculator {
 
@@ -32,16 +30,16 @@ public class Calculator {
 
     //REQUIRES: exponential cannot be negative
     //EFFECTS: Power of value
-    public int power(int operand, int exponential) {
+    public int power(int base, int exponential) {
         int result = 1;
 
-        if (operand == 0) {
+        if (base == 0) {
             result = 0;
         } else if (exponential == 0) {
             result = 1;
         } else {
             for (int i0 = exponential; i0 > 0; i0--) {
-                result = result * operand;
+                result = result * base;
             }
         }
         return result;
