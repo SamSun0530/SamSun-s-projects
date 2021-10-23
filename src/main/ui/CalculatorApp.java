@@ -11,22 +11,28 @@ import java.util.Scanner;
 public class CalculatorApp {
     private int operand1;
     private int operand2;
+    private String temp;
     private String operation;
     private Scanner valueInput1;
     private Scanner valueInput2;
     private Scanner keyboardInput;
     private Calculator calculator;
     private int result;
-    private List<Integer> results = new ArrayList<>();
+    private String log;
+    private List<String> logs = new ArrayList<>();
+    private Scanner searchIndex;
+    private int indexNumber;
 
     //EFFECTS: read the input of operation and values, print the result
     public CalculatorApp() {
         while (true) {
             System.out.println("Select the operation from plus, minus, multiply, divide and power or quit: ");
             keyboardInput = new Scanner(System.in);
-            operation = getOperationInput();
-            if (Objects.equals(operation, "quit")) {
+            temp = getOperationInput();
+            if (Objects.equals(temp, "quit")) {
                 break;
+            } else {
+                operation = temp;
             }
 
             System.out.println("please enter the first operand: ");
@@ -38,9 +44,12 @@ public class CalculatorApp {
             operand2 = getSecondValueInput();
 
             result = doCalculation(operation, operand1, operand2);
-            results.add(result);
+            log = operand1 + " " + operation + " " + operand2 + " = " + result;
+            logs.add(log);
         }
-        System.out.println(results);
+        System.out.println(logs);
+
+        searchLog(logs);
     }
 
     //EFFECTS: assign the keyboard input to operation
@@ -79,5 +88,23 @@ public class CalculatorApp {
 
         System.out.println(result);
         return result;
+    }
+
+    public void searchLog(List<String> logs) {
+        System.out.println(
+                "Any operation you want to search? Type index according to calculation sequence or -1 to leave");
+
+        while (true) {
+            searchIndex = new Scanner(System.in);
+            indexNumber = searchIndex.nextInt();
+
+            if (indexNumber == -1) {
+                break;
+            } else if (1 <= indexNumber && indexNumber <= logs.size()) {
+                System.out.println(logs.get(indexNumber - 1));
+            } else {
+                System.out.println("The index is invalid, please type the index again");
+            }
+        }
     }
 }

@@ -27,7 +27,7 @@ Key points about appliction:
 - As a user, I want to be able to see the result printed
 
 
-- As a user, I want to be able to decide when to stop the calculation
+- As a user, I want to be able to decide when to quit calculator and see the log of calculation
 
 
-- As a user, I want to be able to see all previous results
+- As a user, I want to be able to search any calculation did before
