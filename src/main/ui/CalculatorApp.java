@@ -3,6 +3,11 @@ package ui;
 import model.Calculator;
 import model.Log;
 import model.Logs;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -21,26 +26,24 @@ public class CalculatorApp {
     private Logs logs = new Logs();
     private Scanner searchIndex;
     private int indexNumber;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+    private static final String JSON_STORE = "./data/logs.json";
 
     // REQUIRES: Keyboard input must be one of plus, minus, multiply, divide, power or quit
     // EFFECTS: read the input of operation and values, print the result
     public CalculatorApp() {
+        jsonReader = new JsonReader(JSON_STORE);
+        jsonWriter = new JsonWriter(JSON_STORE);
+        load();
         while (true) {
-            System.out.println("Select the operation from plus, minus, multiply, divide and power or quit: ");
-            keyboardInput = new Scanner(System.in);
             temp = getOperationInput();
             if (Objects.equals(temp, "quit")) {
                 break;
             } else {
                 operation = temp;
             }
-
-            System.out.println("please enter the first operand: ");
-            valueInput1 = new Scanner(System.in);
             operand1 = getFirstValueInput();
-
-            System.out.println("please enter the second operand: ");
-            valueInput2 = new Scanner(System.in);
             operand2 = getSecondValueInput();
 
             result = doCalculation(operation, operand1, operand2);
@@ -48,12 +51,15 @@ public class CalculatorApp {
             logs.add(log);
         }
         System.out.println(logs);
-
         searchLog(logs);
+
+        save();
     }
 
     // EFFECTS: assign the keyboard input to operation
     public String getOperationInput() {
+        System.out.println("Select the operation from plus, minus, multiply, divide and power or quit: ");
+        keyboardInput = new Scanner(System.in);
         String currentOperation = keyboardInput.nextLine();
         System.out.println(currentOperation);
         return currentOperation;
@@ -61,11 +67,15 @@ public class CalculatorApp {
 
     // EFFECTS: assign the keyboard input to first operand
     public int getFirstValueInput() {
+        System.out.println("please enter the first operand: ");
+        valueInput1 = new Scanner(System.in);
         return valueInput1.nextInt();
     }
 
     // EFFECTS: assign the keyboard input to second operand
     public int getSecondValueInput() {
+        System.out.println("please enter the second operand: ");
+        valueInput2 = new Scanner(System.in);
         return valueInput2.nextInt();
     }
 
@@ -94,7 +104,7 @@ public class CalculatorApp {
     // EFFECTS: search the log history according to the index input
     public void searchLog(Logs logs) {
         System.out.println(
-                "Any operation you want to search? Type index according to calculation sequence or -1 to leave");
+                "Any operation you want to search? Type index according to calculation sequence or 0 to leave");
 
         while (true) {
             searchIndex = new Scanner(System.in);
@@ -107,6 +117,47 @@ public class CalculatorApp {
             } else {
                 System.out.println("The index is invalid, please type the index again");
             }
+        }
+    }
+
+    public void save() {
+        System.out.println("You can type save to save logs of calculation or any key to skip");
+        keyboardInput = new Scanner(System.in);
+        String temp = keyboardInput.nextLine();
+        if (temp.equals("save")) {
+            saveLogs();
+            System.out.println("Logs of calculation saved");
+        }
+    }
+
+    public void load() {
+        System.out.println("You can type load to load logs of calculation or any key to skip");
+        keyboardInput = new Scanner(System.in);
+        String temp = keyboardInput.nextLine();
+        if (temp.equals("load")) {
+            loadLogs();
+            System.out.println("Logs of calculation loaded");
+        }
+    }
+
+    // EFFECTS: saves the logs to file
+    private void saveLogs() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(logs);
+            jsonWriter.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    private void loadLogs() {
+        try {
+            logs = jsonReader.read();
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 }

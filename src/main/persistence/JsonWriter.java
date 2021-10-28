@@ -25,7 +25,7 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
+    // EFFECTS: writes JSON representation of logs to file
     public void write(Logs logs) {
         JSONObject json = logs.toJson();
         saveToFile(json.toString(TAB));

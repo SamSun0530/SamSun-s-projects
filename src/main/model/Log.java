@@ -16,6 +16,11 @@ public class Log implements Writable {
     }
 
     @Override
+    public String toString() {
+        return log;
+    }
+
+    @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
         json.put("log", log);

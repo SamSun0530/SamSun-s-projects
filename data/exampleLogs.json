@@ -1,0 +1,12 @@
+{
+  "logs": [
+    {
+      "log": "some data",
+      "id": "1"
+    },
+    {
+      "log": "some more data",
+      "id": "2"
+    }
+  ]
+}
