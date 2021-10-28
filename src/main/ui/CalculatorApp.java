@@ -1,13 +1,12 @@
 package ui;
 
 import model.Calculator;
-
-import java.util.ArrayList;
-import java.util.List;
+import model.Log;
+import model.Logs;
 import java.util.Objects;
 import java.util.Scanner;
 
-// Calculator application
+// Calculator application scans the inputs and do the calculation
 public class CalculatorApp {
     private int operand1;
     private int operand2;
@@ -18,12 +17,13 @@ public class CalculatorApp {
     private Scanner keyboardInput;
     private Calculator calculator;
     private int result;
-    private String log;
-    private List<String> logs = new ArrayList<>();
+    private Log log;
+    private Logs logs = new Logs();
     private Scanner searchIndex;
     private int indexNumber;
 
-    //EFFECTS: read the input of operation and values, print the result
+    // REQUIRES: Keyboard input must be one of plus, minus, multiply, divide, power or quit
+    // EFFECTS: read the input of operation and values, print the result
     public CalculatorApp() {
         while (true) {
             System.out.println("Select the operation from plus, minus, multiply, divide and power or quit: ");
@@ -44,7 +44,7 @@ public class CalculatorApp {
             operand2 = getSecondValueInput();
 
             result = doCalculation(operation, operand1, operand2);
-            log = operand1 + " " + operation + " " + operand2 + " = " + result;
+            log = new Log(operand1 + " " + operation + " " + operand2 + " = " + result);
             logs.add(log);
         }
         System.out.println(logs);
@@ -52,19 +52,19 @@ public class CalculatorApp {
         searchLog(logs);
     }
 
-    //EFFECTS: assign the keyboard input to operation
+    // EFFECTS: assign the keyboard input to operation
     public String getOperationInput() {
         String currentOperation = keyboardInput.nextLine();
         System.out.println(currentOperation);
         return currentOperation;
     }
 
-    //EFFECTS: assign the keyboard input to first operand
+    // EFFECTS: assign the keyboard input to first operand
     public int getFirstValueInput() {
         return valueInput1.nextInt();
     }
 
-    //EFFECTS: assign the keyboard input to second operand
+    // EFFECTS: assign the keyboard input to second operand
     public int getSecondValueInput() {
         return valueInput2.nextInt();
     }
@@ -90,7 +90,9 @@ public class CalculatorApp {
         return result;
     }
 
-    public void searchLog(List<String> logs) {
+    // REQUIRES: input cannot be negative number
+    // EFFECTS: search the log history according to the index input
+    public void searchLog(Logs logs) {
         System.out.println(
                 "Any operation you want to search? Type index according to calculation sequence or -1 to leave");
 
@@ -98,7 +100,7 @@ public class CalculatorApp {
             searchIndex = new Scanner(System.in);
             indexNumber = searchIndex.nextInt();
 
-            if (indexNumber == -1) {
+            if (indexNumber == 0) {
                 break;
             } else if (1 <= indexNumber && indexNumber <= logs.size()) {
                 System.out.println(logs.get(indexNumber - 1));

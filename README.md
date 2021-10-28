@@ -31,3 +31,9 @@ Key points about appliction:
 
 
 - As a user, I want to be able to search any calculation did before
+
+
+- As a user, I want to be able to save log history after application end
+
+
+- As a user, I want to be to load log history from file
