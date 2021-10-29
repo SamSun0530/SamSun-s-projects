@@ -120,6 +120,7 @@ public class CalculatorApp {
         }
     }
 
+    // EFFECTS: save the logs to json file
     public void save() {
         System.out.println("You can type save to save logs of calculation or any key to skip");
         keyboardInput = new Scanner(System.in);
@@ -130,6 +131,7 @@ public class CalculatorApp {
         }
     }
 
+    // EFFECTS: load the data from json file
     public void load() {
         System.out.println("You can type load to load logs of calculation or any key to skip");
         keyboardInput = new Scanner(System.in);
@@ -152,7 +154,7 @@ public class CalculatorApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads workroom from file
+    // EFFECTS: loads logs from file
     private void loadLogs() {
         try {
             logs = jsonReader.read();
