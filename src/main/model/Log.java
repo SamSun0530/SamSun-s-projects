@@ -3,6 +3,7 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
+// One single log of operation
 public class Log implements Writable {
     private String log;
 
@@ -11,6 +12,7 @@ public class Log implements Writable {
         this.log = log;
     }
 
+    // EFFECTS: return the log
     public String getLog() {
         return log;
     }

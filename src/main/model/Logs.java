@@ -9,9 +9,11 @@ import java.util.List;
 
 import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
 
+// A list of log
 public class Logs implements Writable {
     private List<Log> logs;
 
+    // EFFECTS: construct a empty log list
     public Logs() {
         logs = new LinkedList<>();
     }
