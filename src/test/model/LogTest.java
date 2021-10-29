@@ -12,5 +12,6 @@ public class LogTest {
     public void testLogString() {
         log = new Log("1 plus 2 = 3");
         assertEquals("1 plus 2 = 3", log.getLog());
+        assertEquals("1 plus 2 = 3", log.toString());
     }
 }

@@ -16,6 +16,7 @@ public class LogsTest {
     @Test
     public void testEmptyLogs() {
         assertEquals(0, logs.size());
+        assertEquals("logs:[]", logs.toString());
     }
 
     @Test
@@ -25,5 +26,6 @@ public class LogsTest {
         assertEquals(2, logs.size());
         assertEquals("1 plus 1 = 2", logs.get(0).getLog());
         assertEquals("2 minus 1 = 1", logs.get(1).getLog());
+        assertEquals("logs:[1 plus 1 = 2, 2 minus 1 = 1]", logs.toString());
     }
 }

@@ -12,6 +12,8 @@ import java.util.Objects;
 import java.util.Scanner;
 
 // Calculator application scans the inputs and do the calculation
+// This class uses codes from the JsonSerializationDemo-master
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 public class CalculatorApp {
     private int operand1;
     private int operand2;
