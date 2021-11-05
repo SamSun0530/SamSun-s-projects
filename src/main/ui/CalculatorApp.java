@@ -51,6 +51,8 @@ public class CalculatorApp {
             result = doCalculation(operation, operand1, operand2);
             log = new Log(operand1 + " " + operation + " " + operand2 + " = " + result);
             logs.add(log);
+
+            clear();
         }
         System.out.println(logs);
         searchLog(logs);
@@ -140,7 +142,16 @@ public class CalculatorApp {
         String temp = keyboardInput.nextLine();
         if (temp.equals("load")) {
             loadLogs();
-            System.out.println("Logs of calculation loaded");
+            System.out.println(logs);
+        }
+    }
+
+    public void clear() {
+        System.out.println("You can clear the logs by typing clear");
+        keyboardInput = new Scanner(System.in);
+        String clearCommand = keyboardInput.nextLine();
+        if (clearCommand.equals("clear")) {
+            logs = new Logs();
         }
     }
 
