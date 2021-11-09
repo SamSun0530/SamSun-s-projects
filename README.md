@@ -1,6 +1,6 @@
 # My Personal Project
 
-## 2 Inputs Integer Calculator
+## 2 Integer Inputs Calculator
 
 Key points about appliction:
 - What will the application do? 
@@ -33,7 +33,7 @@ Key points about appliction:
 - As a user, I want to be able to search any calculation did before
 
 
-- As a user, I want to be reminded to save log history after application end
+- As a user, I want to be reminded to save log history after application end and load log history at the beginning
 
 
-- As a user, I want to be reminded to load log history from file as application start running
+- As a user, I want to be able to clear log history at any time of the calculation

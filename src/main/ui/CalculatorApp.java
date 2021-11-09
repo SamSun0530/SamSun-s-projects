@@ -42,17 +42,17 @@ public class CalculatorApp {
             temp = getOperationInput();
             if (Objects.equals(temp, "quit")) {
                 break;
+            } else if (temp.equals("clear")) {
+                logs = new Logs();
             } else {
                 operation = temp;
+                operand1 = getFirstValueInput();
+                operand2 = getSecondValueInput();
+
+                result = doCalculation(operation, operand1, operand2);
+                log = new Log(operand1 + " " + operation + " " + operand2 + " = " + result);
+                logs.add(log);
             }
-            operand1 = getFirstValueInput();
-            operand2 = getSecondValueInput();
-
-            result = doCalculation(operation, operand1, operand2);
-            log = new Log(operand1 + " " + operation + " " + operand2 + " = " + result);
-            logs.add(log);
-
-            clear();
         }
         System.out.println(logs);
         searchLog(logs);
@@ -62,7 +62,7 @@ public class CalculatorApp {
 
     // EFFECTS: assign the keyboard input to operation
     public String getOperationInput() {
-        System.out.println("Select the operation from plus, minus, multiply, divide and power or quit: ");
+        System.out.println("Select the operation from plus, minus, multiply, divide and power, clear logs or quit: ");
         keyboardInput = new Scanner(System.in);
         String currentOperation = keyboardInput.nextLine();
         System.out.println(currentOperation);
@@ -143,15 +143,6 @@ public class CalculatorApp {
         if (temp.equals("load")) {
             loadLogs();
             System.out.println(logs);
-        }
-    }
-
-    public void clear() {
-        System.out.println("You can clear the logs by typing clear");
-        keyboardInput = new Scanner(System.in);
-        String clearCommand = keyboardInput.nextLine();
-        if (clearCommand.equals("clear")) {
-            logs = new Logs();
         }
     }
 
