@@ -20,6 +20,7 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
     private String resultText;
     private int positionOfOperator;
     private Calculator calculator;
+    private String tempOperator = "a";
 
     public static void main(String[] args) {
         new GraphicalCalculator();
@@ -91,6 +92,11 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
     }
 
     public void displayOnScreen(ActionEvent e) {
+        if (tempOperator.equals("=")) {
+            text = "";
+            displayToScreen(text);
+            tempOperator = "a";
+        }
         if (e.getActionCommand().equals("delete")) {
             text = field.getText().substring(0, field.getText().length() - 1);
             displayToScreen(text);
@@ -102,7 +108,7 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
         } else if (e.getActionCommand().equals("=")) {
             text = field.getText() + e.getActionCommand() + resultText;
             displayToScreen(text);
-            // I want to reset the text
+            tempOperator = "=";
         }
     }
 
