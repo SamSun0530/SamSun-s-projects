@@ -109,7 +109,6 @@ public class CalculatorApp {
     public void searchLog(Logs logs) {
         System.out.println(
                 "Any operation you want to search? Type index according to calculation sequence or 0 to leave");
-
         while (true) {
             searchIndex = new Scanner(System.in);
             indexNumber = searchIndex.nextInt();

@@ -1,26 +1,38 @@
 package ui;
 
 import model.Calculator;
+import model.Log;
+import model.Logs;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.util.Objects;
 
 
 // Main class create a CalculatorAPP
 public class GraphicalCalculator extends JFrame implements ActionListener {
+    private static final String OPERATOR_STATE = "i";
     private JTextField field;
     private String operator = null;
     private String operand1;
     private String operand2;
     private int result;
-    private String text;
     private String resultText;
+    private String text;
     private int positionOfOperator;
     private Calculator calculator;
-    private String tempOperator = "a";
+    private String tempOperator = OPERATOR_STATE;
+    private Log log;
+    private Logs logs = new Logs();
+    private boolean isLogModel = false;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+    private static final String JSON_STORE = "./data/logs.json";
 
     public static void main(String[] args) {
         new GraphicalCalculator();
@@ -87,15 +99,24 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        calculation(e);
-        displayOnScreen(e);
+        if (e.getActionCommand().equals("logs")) {
+            isLogModel = true;
+        }
+        if (!isLogModel) {
+            calculation(e);
+            screenDisplay(e);
+        } else {
+            jsonWriter = new JsonWriter(JSON_STORE);
+            saveLogs();
+            searchLog(e);
+        }
     }
 
-    public void displayOnScreen(ActionEvent e) {
+    public void screenDisplay(ActionEvent e) {
         if (tempOperator.equals("=")) {
             text = "";
             displayToScreen(text);
-            tempOperator = "a";
+            tempOperator = OPERATOR_STATE;
         }
         if (e.getActionCommand().equals("delete")) {
             text = field.getText().substring(0, field.getText().length() - 1);
@@ -108,6 +129,9 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
         } else if (e.getActionCommand().equals("=")) {
             text = field.getText() + e.getActionCommand() + resultText;
             displayToScreen(text);
+            log = new Log(text);
+            logs.add(log);
+            System.out.println(logs);
             tempOperator = "=";
         }
     }
@@ -121,19 +145,46 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
             operator = e.getActionCommand();
         }
         if (e.getActionCommand().equals("=") && operator != null) {
-            findOperands();
+            positionOfOperator = text.indexOf(operator);
+            operand1 = text.substring(0, positionOfOperator);
+            operand2 = text.substring(positionOfOperator + 1);
+            result = doCalculation(operator, Integer.parseInt(operand1), Integer.parseInt(operand2));
+            resultText = String.valueOf(result);
         }
     }
 
-    private void findOperands() {
-        positionOfOperator = text.indexOf(operator);
-        operand1 = text.substring(0, positionOfOperator);
-        operand2 = text.substring(positionOfOperator + 1);
-        result = doCalculation(operator, Integer.parseInt(operand1), Integer.parseInt(operand2));
-        resultText = String.valueOf(result);
+    public void searchLog(ActionEvent e) {
+        if (e.getActionCommand().equals("logs")) {
+            text = "";
+            displayToScreen(text);
+        } else {
+            if (tempOperator.equals("=")) {
+                text = "";
+                displayToScreen(text);
+                tempOperator = OPERATOR_STATE;
+            }
+            if (e.getActionCommand().equals("delete")) {
+                text = field.getText().substring(0, field.getText().length() - 1);
+                displayToScreen(text);
+            } else if (!e.getActionCommand().equals("=")) {
+                text = field.getText() + e.getActionCommand();
+                displayToScreen(text);
+            } else {
+                getLogByIndex(Integer.parseInt(text));
+                tempOperator = "=";
+            }
+        }
+
     }
 
-    private void displayToScreen(String text) {
+    // search logs with given index
+    public void getLogByIndex(int indexNumber) {
+        if (1 <= indexNumber && indexNumber <= logs.size()) {
+            displayToScreen(logs.get(indexNumber - 1).getLog());
+        }
+    }
+
+    public void displayToScreen(String text) {
         field.setText(text);
         Font font = new Font("SansSerif", Font.BOLD, 50);
         field.setFont(font);
@@ -157,5 +208,16 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
         }
 
         return result;
+    }
+
+    // EFFECTS: saves the logs to file
+    private void saveLogs() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(logs);
+            jsonWriter.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
     }
 }
