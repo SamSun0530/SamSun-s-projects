@@ -11,10 +11,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Objects;
 
 
-// Main class create a CalculatorAPP
+// Main class create a Graphical CalculatorAPP
 public class GraphicalCalculator extends JFrame implements ActionListener {
     private static final String OPERATOR_STATE = "i";
     private JTextField field;
@@ -93,25 +94,32 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
         setButton("*");
         setButton("/");
         setButton("^");
-        setButton("clear");
-        setButton("logs");
+        setButton("saveLog");
+        setButton("loadLog");
+        setButton("clearLog");
     }
 
+    // EFFECTS: achieve functions including calculation, display on screen, search, save, load, clear logs using button
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("logs")) {
+        jsonReader = new JsonReader(JSON_STORE);
+        if (e.getActionCommand().equals("loadLog")) {
+            loadLogs();
+        } else if (e.getActionCommand().equals("clearLog")) {
+            logs = new Logs();
+        } else if (e.getActionCommand().equals("saveLog")) {
             isLogModel = true;
-        }
-        if (!isLogModel) {
+            jsonWriter = new JsonWriter(JSON_STORE);
+            saveLogs();
+        } else if (!isLogModel) {
             calculation(e);
             screenDisplay(e);
         } else {
-            jsonWriter = new JsonWriter(JSON_STORE);
-            saveLogs();
             searchLog(e);
         }
     }
 
+    // EFFECTS: display the button input and calculation result to screen
     public void screenDisplay(ActionEvent e) {
         if (tempOperator.equals("=")) {
             text = "";
@@ -121,8 +129,8 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
         if (e.getActionCommand().equals("delete")) {
             text = field.getText().substring(0, field.getText().length() - 1);
             displayToScreen(text);
-        } else if (!e.getActionCommand().equals("clear")
-                && !e.getActionCommand().equals("logs")
+        } else if (!e.getActionCommand().equals("clearLog")
+                && !e.getActionCommand().equals("saveLog")
                 && !e.getActionCommand().equals("=")) {
             text = field.getText() + e.getActionCommand();
             displayToScreen(text);
@@ -136,6 +144,7 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: calculate the result
     private void calculation(ActionEvent e) {
         if (e.getActionCommand().equals("+")
                 || e.getActionCommand().equals("-")
@@ -153,37 +162,33 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
         }
     }
 
+    // EFFECTS: search log by the index number
     public void searchLog(ActionEvent e) {
-        if (e.getActionCommand().equals("logs")) {
+        if (tempOperator.equals("=")) {
             text = "";
             displayToScreen(text);
-        } else {
-            if (tempOperator.equals("=")) {
-                text = "";
-                displayToScreen(text);
-                tempOperator = OPERATOR_STATE;
-            }
-            if (e.getActionCommand().equals("delete")) {
-                text = field.getText().substring(0, field.getText().length() - 1);
-                displayToScreen(text);
-            } else if (!e.getActionCommand().equals("=")) {
-                text = field.getText() + e.getActionCommand();
-                displayToScreen(text);
-            } else {
-                getLogByIndex(Integer.parseInt(text));
-                tempOperator = "=";
-            }
+            tempOperator = OPERATOR_STATE;
         }
-
+        if (e.getActionCommand().equals("delete")) {
+            text = field.getText().substring(0, field.getText().length() - 1);
+            displayToScreen(text);
+        } else if (!e.getActionCommand().equals("=")) {
+            text = field.getText() + e.getActionCommand();
+            displayToScreen(text);
+        } else {
+            getLogByIndex(Integer.parseInt(text));
+            tempOperator = "=";
+        }
     }
 
-    // search logs with given index
+    // EFFECTS: display log with given index
     public void getLogByIndex(int indexNumber) {
         if (1 <= indexNumber && indexNumber <= logs.size()) {
             displayToScreen(logs.get(indexNumber - 1).getLog());
         }
     }
 
+    // EFFECTS: set the format of text and display on screen
     public void displayToScreen(String text) {
         field.setText(text);
         Font font = new Font("SansSerif", Font.BOLD, 50);
@@ -218,6 +223,19 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
             jsonWriter.close();
         } catch (FileNotFoundException e) {
             System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads logs from file
+    private void loadLogs() {
+        try {
+            Logs localLogs = jsonReader.read();
+            for (int i = 0; i < localLogs.size(); i++) {
+                logs.add(localLogs.get(i));
+            }
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 }
