@@ -49,12 +49,13 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
         pack();
     }
 
+    // EFFECTS: set background
     public void setBackground() {
         getBackgroundPicture(this);
     }
 
+    // EFFECTS: set background using picture
     public void getBackgroundPicture(JFrame contentPane) {
-
         ((JPanel)contentPane.getContentPane()).setOpaque(false);
         ImageIcon background = new ImageIcon("src/img/picture.png");
 
