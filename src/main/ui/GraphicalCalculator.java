@@ -10,6 +10,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
@@ -41,14 +42,31 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
 
     public GraphicalCalculator() {
         setTitle("2 Integer inputs calculator");
-        setBackground();
+        setSize();
         setScreen();
         setButtons();
+        setBackground();
         pack();
     }
 
+    public void setBackground() {
+        getBackgroundPicture(this);
+    }
+
+    public void getBackgroundPicture(JFrame contentPane) {
+
+        ((JPanel)contentPane.getContentPane()).setOpaque(false);
+        ImageIcon background = new ImageIcon("src/img/picture.png");
+
+        JLabel bglabel = new JLabel(background);
+        bglabel.setIcon(background);
+
+        this.getLayeredPane().add(bglabel,new Integer(Integer.MIN_VALUE));
+        bglabel.setBounds(0, 0, background.getIconWidth(), background.getIconHeight());
+    }
+
     // EFFECTS: set the background of calculator
-    private void setBackground() {
+    private void setSize() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setLayout(new FlowLayout());
         setPreferredSize(new Dimension(500, 750));
@@ -139,7 +157,6 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
             displayToScreen(text);
             log = new Log(text);
             logs.add(log);
-            System.out.println(logs);
             tempOperator = "=";
         }
     }
