@@ -33,7 +33,7 @@ Key points about appliction:
 - As a user, I want to be able to search any calculation did before
 
 
-- As a user, I want to be reminded to save log history after application end and load log history at the beginning
+- As a user, I want to be able to save log history after calculation end and load log history at anytime
 
 
 - As a user, I want to be able to clear log history at any time of the calculation
