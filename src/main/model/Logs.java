@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class Logs implements Writable {
 
     // EFFECTS: construct a empty log list
     public Logs() {
-        logs = new LinkedList<>();
+        logs = new ArrayList<>();
     }
 
     // MODIFIES: this
@@ -33,6 +34,12 @@ public class Logs implements Writable {
     // EFFECTS: return the log object with index
     public Log get(int index) {
         return logs.get(index);
+    }
+
+    // MODIFIES: this
+    // EFFECTS: clear the existing logs
+    public void clearLogs() {
+        logs = new ArrayList<>();
     }
 
     @Override

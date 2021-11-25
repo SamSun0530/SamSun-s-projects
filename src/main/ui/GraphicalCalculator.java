@@ -125,7 +125,7 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
         if (e.getActionCommand().equals("loadLog")) {
             loadLogs();
         } else if (e.getActionCommand().equals("clearLog")) {
-            logs = new Logs();
+            logs.clearLogs();
         } else if (e.getActionCommand().equals("saveLog")) {
             isLogModel = true;
             jsonWriter = new JsonWriter(JSON_STORE);
