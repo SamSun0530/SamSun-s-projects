@@ -5,7 +5,6 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import static jdk.nashorn.internal.runtime.regexp.joni.Config.log;
@@ -23,6 +22,7 @@ public class Logs implements Writable {
     // EFFECTS: add log to list of log
     public void add(Log log) {
         logs.add(log);
+        EventLog.getInstance().logEvent(new Event("A calculation log is added."));
     }
 
     // EFFECTS: return the size of logs
@@ -40,6 +40,7 @@ public class Logs implements Writable {
     // EFFECTS: clear the existing logs
     public void clearLogs() {
         logs = new ArrayList<>();
+        EventLog.getInstance().logEvent(new Event("Calculation log history is cleared."));
     }
 
     @Override

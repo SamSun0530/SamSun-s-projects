@@ -1,6 +1,7 @@
 package ui;
 
 import model.Calculator;
+import model.EventLog;
 import model.Log;
 import model.Logs;
 import persistence.JsonReader;
@@ -10,7 +11,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
+import java.awt.event.WindowEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
@@ -38,6 +39,12 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
         new GraphicalCalculator();
+
+//        @Override
+//        public void windowClosing(WindowEvent we) {
+//            System.out.println(EventLog.getInstance());
+//            System.exit(0);
+//        }
     }
 
     public GraphicalCalculator() {
@@ -135,6 +142,7 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
             screenDisplay(e);
         } else {
             searchLog(e);
+            System.out.println(EventLog.getInstance());
         }
     }
 
