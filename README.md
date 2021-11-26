@@ -55,3 +55,13 @@ A calculation log is added.
 Thu Nov 25 19:24:57 PST 2021
 
 Calculation log history is cleared.
+
+
+### Phase 4: Task 3
+Diagram in the top level of project folder
+
+The GraphicalCalculator contains 1 JsonWriter, 1 JsonReader, 1 Logs and arbitrary number of Log and Calculator.
+
+Logs contains a list of Log that number from 0 to any number.
+
+EventLogs contains a list of Event that number from 0 to any number.
