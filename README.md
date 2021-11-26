@@ -37,3 +37,21 @@ Key points about appliction:
 
 
 - As a user, I want to be able to clear log history at any time of the calculation
+
+
+### Phase 4: Task 2
+Thu Nov 25 19:24:47 PST 2021
+
+A calculation log is added.
+
+Thu Nov 25 19:24:52 PST 2021
+
+Calculation log history is cleared.
+
+Thu Nov 25 19:24:55 PST 2021
+
+A calculation log is added.
+
+Thu Nov 25 19:24:57 PST 2021
+
+Calculation log history is cleared.
