@@ -1,6 +1,7 @@
 package ui;
 
 import model.Calculator;
+import model.Event;
 import model.EventLog;
 import model.Log;
 import model.Logs;
@@ -9,12 +10,12 @@ import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
+
+import static java.awt.event.WindowEvent.WINDOW_CLOSED;
 
 
 // Main class create a Graphical CalculatorAPP
@@ -39,12 +40,6 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
         new GraphicalCalculator();
-
-//        @Override
-//        public void windowClosing(WindowEvent we) {
-//            System.out.println(EventLog.getInstance());
-//            System.exit(0);
-//        }
     }
 
     public GraphicalCalculator() {
@@ -53,6 +48,17 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
         setScreen();
         setButtons();
         setBackground();
+
+        WindowListener exitListener = new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                for (Event event : EventLog.getInstance()) {
+                    System.out.println(event);
+                }
+                System.exit(0);
+            }
+        };
+        this.addWindowListener(exitListener);
         pack();
     }
 
@@ -64,7 +70,7 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
     // EFFECTS: set background using picture
     public void getBackgroundPicture(JFrame contentPane) {
         ((JPanel)contentPane.getContentPane()).setOpaque(false);
-        ImageIcon background = new ImageIcon("src/img/picture.png");
+        ImageIcon background = new ImageIcon("src/img/Violet Evergarden.png");
 
         JLabel bglabel = new JLabel(background);
         bglabel.setIcon(background);
@@ -75,7 +81,7 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
 
     // EFFECTS: set the background of calculator
     private void setSize() {
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         setLayout(new FlowLayout());
         setPreferredSize(new Dimension(500, 750));
         setVisible(true);
@@ -142,7 +148,6 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
             screenDisplay(e);
         } else {
             searchLog(e);
-            System.out.println(EventLog.getInstance());
         }
     }
 
@@ -264,4 +269,5 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
+
 }
