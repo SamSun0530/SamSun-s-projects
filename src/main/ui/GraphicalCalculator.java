@@ -31,7 +31,7 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
     private int positionOfOperator;
     private Calculator calculator;
     private String tempOperator = OPERATOR_STATE;
-    private Log log;
+    //private Log log;
     private Logs logs = new Logs();
     private boolean isLogModel = false;
     private JsonWriter jsonWriter;
@@ -169,8 +169,8 @@ public class GraphicalCalculator extends JFrame implements ActionListener {
         } else if (e.getActionCommand().equals("=")) {
             text = field.getText() + e.getActionCommand() + resultText;
             displayToScreen(text);
-            log = new Log(text);
-            logs.add(log);
+            //log = new Log(text);
+            logs.add(new Log(text));
             tempOperator = "=";
         }
     }
